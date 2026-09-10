@@ -14,6 +14,8 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));
+app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/ai", require("./routes/aiRoutes"));
 app.get("/", (req, res) => {
   res.send("ShopEase API is running...");
 });
