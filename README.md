@@ -3,8 +3,8 @@
 A full-stack Amazon-style e-commerce web application built with MongoDB, Express, React, and Node.js.
 
 ## Live Demo
-- Frontend: [https://shopweb-5jji0cy6w-asma-nazir.vercel.app/]
-- Backend API: [https://shopaseserver-3q8sz0ae.b4a.run/]
+- Frontend: [https://shopweb-git-main-asma-nazir.vercel.app/]
+- Backend API: [https://shopaseserver-440fwwou.b4a.run/]
 
 ## Features
 - **Authentication**: JWT-based signup/login with role-based access (user/admin)
