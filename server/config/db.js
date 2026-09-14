@@ -22,5 +22,12 @@ const connectDB = async () => {
     throw error;
   }
 };
+await mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 10000,
+  bufferCommands: false,
+  maxPoolSize: 1,
+  family: 4,
+});
 
 module.exports = connectDB;
