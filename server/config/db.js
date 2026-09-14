@@ -1,26 +1,39 @@
 const mongoose = require("mongoose");
 
-let isConnected = false;
+let cached = global.mongooseConnection;
 
-const connectDB = async () => {
-  if (isConnected && mongoose.connection.readyState === 1) {
-    return;
+if (!cached) {
+  cached = global.mongooseConnection = { conn: null, promise: null };
+}
+
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGO_URI, {
+        bufferCommands: false,
+        maxPoolSize: 5,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 10000,
+        family: 4,
+      })
+      .then((mongooseInstance) => {
+        console.log("MongoDB connected");
+        return mongooseInstance;
+      });
   }
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 10000,
-      bufferCommands: false,
-      maxPoolSize: 1,
-    });
-    isConnected = true;
-    console.log("MongoDB connected");
+    cached.conn = await cached.promise;
   } catch (error) {
-    isConnected = false;
-    console.error(`MongoDB connection error: ${error.message}`);
+    cached.promise = null;
     throw error;
   }
-};
+
+  return cached.conn;
+}
 
 module.exports = connectDB;
