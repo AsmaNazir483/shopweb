@@ -29,7 +29,9 @@ app.use("/api/ai", require("./routes/aiRoutes"));
 app.get("/", (req, res) => {
   res.send("ShopEase API is running...");
 });
-
+app.get("/api/ping", (req, res) => {
+  res.json({ message: "pong", time: new Date().toISOString() });
+});
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not found" });
 });
